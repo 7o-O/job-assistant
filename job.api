@@ -1,0 +1,18 @@
+syntax = "v1"
+
+type CommonResponse {
+	Code    int         `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+	Success bool        `json:"success"`
+}
+
+type AnalyzeRequest {
+	JobDescription string `json:"jobDescription"`
+	Question       string `json:"question"`
+}
+
+service job-api {
+	@handler Analyze
+	post /api/analyze (AnalyzeRequest) returns (CommonResponse)
+}

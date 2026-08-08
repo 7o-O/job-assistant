@@ -1,0 +1,14 @@
+.env
+*.log
+*.exe
+*.test
+coverage.out
+
+# Local runtime config can contain database credentials.
+etc/job-api.yaml
+
+# Editor and OS files.
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

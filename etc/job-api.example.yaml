@@ -1,0 +1,11 @@
+Name: job-api
+Host: 0.0.0.0
+Port: 8888
+Timeout: 180000
+
+MySQL:
+  DataSource: "root:password@tcp(127.0.0.1:3306)/job_analyzer?charset=utf8mb4&parseTime=True&loc=Local"
+
+LLM:
+  BaseURL: "https://api.gemai.cc/v1"
+  Model: "grok-3"
