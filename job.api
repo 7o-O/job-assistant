@@ -17,11 +17,18 @@ type HistoryRequest {
 	PageSize int `form:"pageSize,optional"`
 }
 
+type DeleteHistoryRequest {
+	Id int `path:"id"`
+}
+
 service job-api {
 	@handler Analyze
 	post /api/analyze (AnalyzeRequest) returns (CommonResponse)
 
 	@handler History
 	get /api/analyze/history (HistoryRequest) returns (CommonResponse)
+
+	@handler DeleteHistory
+	delete /api/analyze/history/:id (DeleteHistoryRequest) returns (CommonResponse)
 }
 

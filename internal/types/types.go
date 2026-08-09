@@ -15,6 +15,10 @@ type CommonResponse struct {
 	Success bool        `json:"success"`
 }
 
+type DeleteHistoryRequest struct {
+	Id int `path:"id"`
+}
+
 type HistoryRequest struct {
 	Page     int `form:"page,optional"`
 	PageSize int `form:"pageSize,optional"`

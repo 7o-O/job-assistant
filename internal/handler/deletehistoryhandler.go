@@ -13,16 +13,16 @@ import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func HistoryHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func DeleteHistoryHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.HistoryRequest
+		var req types.DeleteHistoryRequest
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := logic.NewHistoryLogic(r.Context(), svcCtx)
-		resp, err := l.History(&req)
+		l := logic.NewDeleteHistoryLogic(r.Context(), svcCtx)
+		resp, err := l.DeleteHistory(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

@@ -28,28 +28,23 @@ func NewHistoryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *HistoryLo
 }
 
 func (l *HistoryLogic) History(req *types.HistoryRequest) (resp *types.CommonResponse, err error) {
-	// Default to the first page when page is missing or invalid.
 	page := req.Page
 	if page <= 0 {
 		page = 1
 	}
 
-	// Default to 10 records per page when pageSize is missing or invalid.
 	pageSize := req.PageSize
 	if pageSize <= 0 {
 		pageSize = 10
 	}
 
-	// Limit pageSize to protect the database from large queries.
 	if pageSize > 50 {
 		pageSize = 50
 	}
 
-	// Count total records so the client can calculate total pages.
 	var total int64
 	if err := l.svcCtx.DB.
-		Model(&model.AnalyzeRecord{}).
-		Count(&total).Error; err != nil {
+		Model(&model.AnalyzeRecord{}).Count(&total).Error; err != nil {
 		return &types.CommonResponse{
 			Code:    500,
 			Message: "query total failed: " + err.Error(),
@@ -57,16 +52,12 @@ func (l *HistoryLogic) History(req *types.HistoryRequest) (resp *types.CommonRes
 		}, nil
 	}
 
-	// Skip records from previous pages and read only the current page.
 	offset := (page - 1) * pageSize
 
-	// Query current-page records with newest records first.
+	// 查询历史
 	var records []model.AnalyzeRecord
 	if err := l.svcCtx.DB.
-		Order("created_at DESC").
-		Limit(pageSize).
-		Offset(offset).
-		Find(&records).Error; err != nil {
+		Order("created_at DESC").Limit(pageSize).Offset(offset).Find(&records).Error; err != nil {
 		return &types.CommonResponse{
 			Code:    500,
 			Message: "query history failed: " + err.Error(),

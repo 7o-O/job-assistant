@@ -24,6 +24,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/api/analyze/history",
 				Handler: HistoryHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/api/analyze/history/:id",
+				Handler: DeleteHistoryHandler(serverCtx),
+			},
 		},
 	)
 }
