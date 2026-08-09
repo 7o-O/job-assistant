@@ -19,6 +19,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/api/analyze",
 				Handler: AnalyzeHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/api/analyze/history",
+				Handler: HistoryHandler(serverCtx),
+			},
 		},
 	)
 }

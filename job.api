@@ -12,7 +12,16 @@ type AnalyzeRequest {
 	Question       string `json:"question"`
 }
 
+type HistoryRequest {
+	Page     int `form:"page,optional"`
+	PageSize int `form:"pageSize,optional"`
+}
+
 service job-api {
 	@handler Analyze
 	post /api/analyze (AnalyzeRequest) returns (CommonResponse)
+
+	@handler History
+	get /api/analyze/history (HistoryRequest) returns (CommonResponse)
 }
+

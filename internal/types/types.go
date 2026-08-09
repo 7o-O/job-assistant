@@ -14,3 +14,8 @@ type CommonResponse struct {
 	Data    interface{} `json:"data"`
 	Success bool        `json:"success"`
 }
+
+type HistoryRequest struct {
+	Page     int `form:"page,optional"`
+	PageSize int `form:"pageSize,optional"`
+}
