@@ -13,8 +13,9 @@ type AnalyzeRequest {
 }
 
 type HistoryRequest {
-	Page     int `form:"page,optional"`
-	PageSize int `form:"pageSize,optional"`
+	Page     int    `form:"page,optional"`
+	PageSize int    `form:"pageSize,optional"`
+	KeyWord  string `form:"keyword,optional"`
 }
 
 type DeleteHistoryRequest {

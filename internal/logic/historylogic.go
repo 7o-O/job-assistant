@@ -5,6 +5,7 @@ package logic
 
 import (
 	"context"
+	"strings"
 
 	"job-assistant/internal/model"
 	"job-assistant/internal/svc"
@@ -42,9 +43,16 @@ func (l *HistoryLogic) History(req *types.HistoryRequest) (resp *types.CommonRes
 		pageSize = 50
 	}
 
+	query := l.svcCtx.DB.Model(&model.AnalyzeRecord{})
+
+	//关键字查询
+	if strings.TrimSpace(req.KeyWord) != "" {
+		keyword := "%" + strings.TrimSpace(req.KeyWord) + "%"
+		query = query.Where("job_description LIKE ? OR question LIKE ? OR answer LIKE ?", keyword, keyword, keyword)
+	}
+
 	var total int64
-	if err := l.svcCtx.DB.
-		Model(&model.AnalyzeRecord{}).Count(&total).Error; err != nil {
+	if err := query.Count(&total).Error; err != nil {
 		return &types.CommonResponse{
 			Code:    500,
 			Message: "query total failed: " + err.Error(),
@@ -56,8 +64,7 @@ func (l *HistoryLogic) History(req *types.HistoryRequest) (resp *types.CommonRes
 
 	// 查询历史
 	var records []model.AnalyzeRecord
-	if err := l.svcCtx.DB.
-		Order("created_at DESC").Limit(pageSize).Offset(offset).Find(&records).Error; err != nil {
+	if err := query.Order("created_at DESC").Limit(pageSize).Offset(offset).Find(&records).Error; err != nil {
 		return &types.CommonResponse{
 			Code:    500,
 			Message: "query history failed: " + err.Error(),

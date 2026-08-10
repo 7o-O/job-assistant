@@ -20,6 +20,7 @@ type DeleteHistoryRequest struct {
 }
 
 type HistoryRequest struct {
-	Page     int `form:"page,optional"`
-	PageSize int `form:"pageSize,optional"`
+	Page     int    `form:"page,optional"`
+	PageSize int    `form:"pageSize,optional"`
+	KeyWord  string `form:"keyword,optional"`
 }
